@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinKsp)
-
+    id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -62,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -73,14 +75,21 @@ dependencies {
    // dagger-hilt
     implementation("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-compiler:2.48")
-
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     // Retrofit
     implementation(libs.retrofit)
     // Retrofit with Scalar Converter
     implementation(libs.gson)
     //gson converter
     implementation(libs.converter.gson)
+    // Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.4.0")
 
+    // Compose livedata
+    implementation("androidx.compose.runtime:runtime-livedata:1.3.3")
+
+    // Integration with ViewModels
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
 
 }
 

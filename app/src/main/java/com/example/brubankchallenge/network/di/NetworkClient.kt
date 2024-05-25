@@ -14,14 +14,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
+    private const val BASE_URL = "https://api.themoviedb.org"
 
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
         val apiKeyInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "token ${BuildConfig.API_ACCESS_TOKEN}")
+                .addHeader("Authorization", "Bearer ${BuildConfig.API_ACCESS_TOKEN}")
                 .build()
             chain.proceed(request)
         }
