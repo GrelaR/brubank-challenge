@@ -1,8 +1,8 @@
 package com.example.brubankchallenge.domain.repository
 
-import com.example.brubankchallenge.domain.model.MovieGenresList
+import com.example.brubankchallenge.domain.model.TopRatedMovies
 
 interface GetMoviesByGenreRepository {
-    suspend fun getMoviesByGenre(): MovieGenresList
+    suspend fun getMoviesByGenre(): TopRatedMovies
 
 }

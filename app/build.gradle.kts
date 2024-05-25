@@ -95,5 +95,11 @@ dependencies {
     // Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    // Glide
+    implementation(libs.compose)
+
+    // Palette
+    implementation(libs.androidx.palette.ktx)
+
 }
 

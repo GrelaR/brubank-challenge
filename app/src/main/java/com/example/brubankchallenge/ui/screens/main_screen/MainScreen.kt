@@ -22,19 +22,9 @@ fun MainScreen(
     when (uiState.value) {
         is UIState.Loading -> ProgressBarScreen()
         is UIState.Success -> HomeScreen(
-            moviesGenresList = (uiState.value as UIState.Success).data,
+            topRatedMovies = (uiState.value as UIState.Success).data,
         )
 
-//        is UIState.NetworkError -> {
-//            BackHandler(enabled = false, onBack = {})
-//            onNavigationClickListener(CONNECTION_ERROR_SCREEN)
-//        }
-//
-//        is UIState.GenericError -> {
-//            // Este metodo queda fuera de uso por el propio feedback.
-//            BackHandler(enabled = false, onBack = {})
-//            onNavigationClickListener(GENERIC_ERROR_SCREEN)
-//        }
         is UIState.GenericError -> {}
         is UIState.NetworkError -> {}
 
