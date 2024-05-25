@@ -20,7 +20,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "API_ACCESS_TOKEN", "\"${project.findProperty("API_ACCESS_TOKEN")}\"")
+        buildConfigField(
+            "String",
+            "API_ACCESS_TOKEN",
+            "\"${project.findProperty("API_ACCESS_TOKEN")}\""
+        )
     }
 
     buildTypes {
@@ -72,10 +76,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-   // dagger-hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    ksp("com.google.dagger:hilt-compiler:2.48")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    // dagger-hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
     // Retrofit
     implementation(libs.retrofit)
     // Retrofit with Scalar Converter
@@ -83,13 +87,13 @@ dependencies {
     //gson converter
     implementation(libs.converter.gson)
     // Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.4.0")
+    implementation(libs.androidx.navigation.compose.v240)
 
     // Compose livedata
-    implementation("androidx.compose.runtime:runtime-livedata:1.3.3")
+    implementation(libs.androidx.runtime.livedata)
 
     // Integration with ViewModels
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 }
 
