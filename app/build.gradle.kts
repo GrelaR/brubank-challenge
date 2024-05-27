@@ -1,12 +1,14 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlinKsp)
+    id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
     namespace = "com.example.brubankchallenge"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.example.brubankchallenge"
         minSdk = 24
@@ -18,6 +20,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField(
+            "String",
+            "API_ACCESS_TOKEN",
+            "\"${project.findProperty("API_ACCESS_TOKEN")}\""
+        )
     }
 
     buildTypes {
@@ -38,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -59,6 +67,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +75,31 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // dagger-hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    // Retrofit
+    implementation(libs.retrofit)
+    // Retrofit with Scalar Converter
+    implementation(libs.gson)
+    //gson converter
+    implementation(libs.converter.gson)
+    // Compose Navigation
+    implementation(libs.androidx.navigation.compose.v240)
+
+    // Compose livedata
+    implementation(libs.androidx.runtime.livedata)
+
+    // Integration with ViewModels
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Glide
+    implementation(libs.compose)
+
+    // Palette
+    implementation(libs.androidx.palette.ktx)
+
 }
+
