@@ -1,10 +1,11 @@
 package com.example.brubankchallenge.domain.usecase
 
-import com.example.brubankchallenge.domain.repository.GetMoviesByGenreRepository
+import com.example.brubankchallenge.domain.repository.GetMoviesRepository
 import javax.inject.Inject
 
 class GetMoviesUseCase @Inject constructor(
-    private val getMoviesByGenreRepository: GetMoviesByGenreRepository
+    private val getMovieRepository: GetMoviesRepository
 ) {
-    suspend operator fun invoke() = getMoviesByGenreRepository.getMoviesByGenre()
+    suspend operator fun invoke(currentPage: Int) =
+        getMovieRepository.getTopRatedMovies(currentPage)
 }

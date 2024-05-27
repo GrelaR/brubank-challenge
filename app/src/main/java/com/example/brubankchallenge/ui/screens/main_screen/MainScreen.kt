@@ -23,6 +23,7 @@ fun MainScreen(
         is UIState.Loading -> ProgressBarScreen()
         is UIState.Success -> HomeScreen(
             topRatedMovies = (uiState.value as UIState.Success).data,
+            mainScreenViewModel = mainScreenViewModel
         )
 
         is UIState.GenericError -> {}

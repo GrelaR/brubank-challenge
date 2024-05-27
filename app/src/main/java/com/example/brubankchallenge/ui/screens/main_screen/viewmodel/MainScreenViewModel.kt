@@ -4,6 +4,8 @@ import android.accounts.NetworkErrorException
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.brubankchallenge.domain.usecase.GetGenresUseCase
 import com.example.brubankchallenge.domain.usecase.GetMoviesUseCase
 import com.example.brubankchallenge.ui.screens.main_screen.components.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,16 +17,31 @@ import retrofit2.HttpException
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val getMoviesUseCase: GetMoviesUseCase
+    private val getMoviesUseCase: GetMoviesUseCase,
+    private val getGenresUseCase: GetGenresUseCase
 ) : ViewModel() {
     private val _uiState: MutableLiveData<UIState> = MutableLiveData()
     val uiState: MutableLiveData<UIState> get() = _uiState
+
+    var currentPage = 1
+    var totalPage = 1
+
+    init {
+        viewModelScope.launch {
+            getGenresUseCase()
+        }
+    }
+
     fun getMovies() {
-        _uiState.value = UIState.Loading
+        if (currentPage > totalPage) return
+
         viewModelScope.launch {
             try {
-                val data = getMoviesUseCase()
-                _uiState.value = UIState.Success(data)
+                val response = getMoviesUseCase.invoke(currentPage)
+                totalPage = response.totalPages
+                val currentMovieList = (_uiState.value as? UIState.Success)?.data ?: emptyList()
+                _uiState.value = UIState.Success(currentMovieList + response.results)
+                currentPage++
             } catch (e: Exception) {
                 _uiState.value = when (e) {
                     is HttpException,
@@ -42,7 +59,6 @@ class MainScreenViewModel @Inject constructor(
 
         }
     }
-
 }
 
 

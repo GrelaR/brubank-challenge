@@ -1,15 +1,16 @@
 package com.example.brubankchallenge.data.datasource
 
 import com.example.brubankchallenge.data.api.GetMoviesService
-import com.example.brubankchallenge.domain.model.TopRatedMovies
+import com.example.brubankchallenge.domain.model.MovieGenresResponse
 import javax.inject.Inject
 import retrofit2.Response
 
-class GetMoviesGenresDataSourceImpl @Inject constructor(
+class GetGenresDataSourceImpl @Inject constructor(
     private val getMoviesService: GetMoviesService
-) : GetMoviesGenresDataSource {
+) : GetGenresDataSource {
 
-    override suspend fun getMoviesGenresData(): Response<TopRatedMovies> {
+    override suspend fun getMoviesGenres(): Response<MovieGenresResponse> {
         return getMoviesService.getMovieGenres()
     }
+
 }

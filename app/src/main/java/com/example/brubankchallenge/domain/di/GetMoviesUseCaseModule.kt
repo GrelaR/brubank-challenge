@@ -1,7 +1,7 @@
 package com.example.brubankchallenge.domain.di
 
-import com.example.brubankchallenge.data.repository.GetMoviesByGenreRepositoryImpl
-import com.example.brubankchallenge.domain.repository.GetMoviesByGenreRepository
+import com.example.brubankchallenge.data.repository.GetMoviesRepositoryImpl
+import com.example.brubankchallenge.domain.repository.GetMoviesRepository
 import com.example.brubankchallenge.domain.usecase.GetMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -14,8 +14,8 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object GetMoviesUseCaseRepositoryModule {
     @Provides
-    fun provideGetMoviesByGenreRepositoryImpl(getMoviesByGenreRepositoryImpl: GetMoviesByGenreRepositoryImpl): GetMoviesByGenreRepository {
-        return getMoviesByGenreRepositoryImpl
+    fun provideGetMoviesRepositoryImpl(getMoviesRepositoryImpl: GetMoviesRepositoryImpl): GetMoviesRepository {
+        return getMoviesRepositoryImpl
     }
 }
 
@@ -25,7 +25,7 @@ object GetMoviesUseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideGetSecurityCenterDataUseCase(repository: GetMoviesByGenreRepository): GetMoviesUseCase {
+    fun provideGetMoviesUseCase(repository: GetMoviesRepository): GetMoviesUseCase {
         return GetMoviesUseCase(repository)
     }
 }
