@@ -101,5 +101,8 @@ dependencies {
     // Palette
     implementation(libs.androidx.palette.ktx)
 
+    // Pagination
+    implementation(libs.androidx.paging.compose)
+
 }
 

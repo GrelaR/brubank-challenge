@@ -15,14 +15,13 @@ fun MainScreen(
     mainScreenViewModel: MainScreenViewModel = viewModel()
 ) {
     LaunchedEffect(key1 = true) {
-        mainScreenViewModel.getMovies()
+        mainScreenViewModel.movies
     }
     val uiState = mainScreenViewModel.uiState.observeAsState(initial = UIState.Loading)
 
     when (uiState.value) {
         is UIState.Loading -> ProgressBarScreen()
         is UIState.Success -> HomeScreen(
-            topRatedMovies = (uiState.value as UIState.Success).data,
             mainScreenViewModel = mainScreenViewModel
         )
 

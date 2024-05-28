@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.brubankchallenge.ui.screens.home_screen.HomeScreen
 import com.example.brubankchallenge.ui.screens.main_screen.MainScreen
 
 const val MAIN_SCREEN = "main_screen"
@@ -21,7 +22,7 @@ fun Navigation(startDestination: String = MAIN_SCREEN) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(MAIN_SCREEN) {
             val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
-            MainScreen(mainScreenViewModel)
+            HomeScreen(mainScreenViewModel)
         }
         composable(GENERIC_ERROR_SCREEN) {
 

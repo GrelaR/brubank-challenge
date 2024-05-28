@@ -1,8 +1,8 @@
 package com.example.brubankchallenge.domain.repository
 
-import com.example.brubankchallenge.domain.model.MovieResponse
+import androidx.paging.PagingSource
+import com.example.brubankchallenge.domain.model.Movie
 
 interface GetMoviesRepository {
-    suspend fun getTopRatedMovies(currentPage: Int): MovieResponse
-
+    fun getTopRatedMovies(): PagingSource<Int, Movie>
 }
