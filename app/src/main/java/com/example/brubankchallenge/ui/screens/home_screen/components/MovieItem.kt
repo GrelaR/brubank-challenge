@@ -2,6 +2,7 @@ package com.example.brubankchallenge.ui.screens.home_screen.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,30 +16,27 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
+import coil.compose.AsyncImage
 
-
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun MovieItem(title: String, posterPath: String) {
-
+    val grayscaleMatrix = ColorMatrix().apply { setToSaturation(0.03f) }
+    val colorFilter = ColorFilter.colorMatrix(grayscaleMatrix)
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .padding(8.dp)
     ) {
-        GlideImage(
+        AsyncImage(
             model = "https://image.tmdb.org/t/p/w500${posterPath}",
             contentDescription = null,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp),
+                .fillMaxSize()
+                .padding(16.dp),
             contentScale = ContentScale.Crop,
-            colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+            colorFilter = colorFilter
         )
-
 
         Column(
             modifier = Modifier

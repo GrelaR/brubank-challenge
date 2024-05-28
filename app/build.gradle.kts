@@ -98,6 +98,9 @@ dependencies {
     // Glide
     implementation(libs.compose)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // Palette
     implementation(libs.androidx.palette.ktx)
 
