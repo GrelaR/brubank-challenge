@@ -1,4 +1,4 @@
-package com.example.brubankchallenge.ui.screens.main_screen.components
+package com.example.brubankchallenge.ui.screens.home_screen.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

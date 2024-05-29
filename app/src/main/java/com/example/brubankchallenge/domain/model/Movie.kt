@@ -8,5 +8,7 @@ data class Movie(
     @SerializedName("title")
     val title: String?,
     @SerializedName("poster_path")
-    val posterPath: String?
+    val posterPath: String?,
+    @SerializedName("genre_ids")
+    val genreIds: List<Int>
 )

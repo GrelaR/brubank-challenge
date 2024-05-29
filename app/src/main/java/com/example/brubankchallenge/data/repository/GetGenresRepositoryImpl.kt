@@ -1,24 +1,25 @@
 package com.example.brubankchallenge.data.repository
 
 import com.example.brubankchallenge.data.datasource.GetGenresDataSource
+import com.example.brubankchallenge.domain.model.Genre
 import com.example.brubankchallenge.domain.model.MovieGenresResponse
 import com.example.brubankchallenge.domain.repository.GetGenresRepository
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class GetGenresRepositoryImpl @Inject constructor(
     private val getGenresDataSource: GetGenresDataSource
 ) : GetGenresRepository {
-    override suspend fun getMovieGenres(): MovieGenresResponse {
-        return try {
-            val response = getGenresDataSource.getMoviesGenres()
-            if (response.isSuccessful) {
-                response.body()!!
-            } else {
-                throw Exception("Response body is null")
-            }
-        } catch (exception: Exception) {
-            throw exception
+    override fun getMovieGenres(): Flow<List<Genre>> = flow {
+        val response = getGenresDataSource.getMoviesGenres()
+        if (response.isSuccessful) {
+            response.body()?.let { genreResponse ->
+                emit(genreResponse.genres)
+            } ?: emit(emptyList())
+        } else {
+            emit(emptyList())
         }
-
     }
 }
+
