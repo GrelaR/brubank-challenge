@@ -1,14 +1,13 @@
 package com.example.brubankchallenge.ui.nav
 
-import com.example.brubankchallenge.ui.screens.main_screen.components.ProgressBarScreen
-import com.example.brubankchallenge.ui.screens.main_screen.viewmodel.MainScreenViewModel
+import com.example.brubankchallenge.ui.screens.home_screen.components.ProgressBarScreen
+import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.brubankchallenge.ui.screens.home_screen.HomeScreen
-import com.example.brubankchallenge.ui.screens.main_screen.MainScreen
 
 const val MAIN_SCREEN = "main_screen"
 const val GENERIC_ERROR_SCREEN = "generic_error_screen"

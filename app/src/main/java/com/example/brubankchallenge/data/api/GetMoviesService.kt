@@ -7,12 +7,12 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GetMoviesService {
-    @GET("3/movie/top_rated")
+    @GET("movie/top_rated")
     suspend fun getMovieTopRated(
         @Query("page") page: Int
     ): Response<MovieResponse>
 
-    @GET("3/genre/movie/list")
+    @GET("genre/movie/list")
     suspend fun getMovieGenres(
     ): Response<MovieGenresResponse>
 }

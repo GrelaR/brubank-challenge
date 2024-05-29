@@ -25,6 +25,11 @@ android {
             "API_ACCESS_TOKEN",
             "\"${project.findProperty("API_ACCESS_TOKEN")}\""
         )
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"https://api.themoviedb.org/3/\""
+        )
     }
 
     buildTypes {
@@ -103,6 +108,15 @@ dependencies {
 
     // Pagination
     implementation(libs.androidx.paging.compose)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.androidx.paging.runtime)
+
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
 
 }
 

@@ -21,7 +21,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieItem(title: String, posterPath: String) {
+fun MovieItem(title: String, posterPath: String, genre: String) {
 
     Box(
         modifier = Modifier
@@ -47,6 +47,17 @@ fun MovieItem(title: String, posterPath: String) {
         ) {
             Text(
                 text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White
+            )
+        }
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = genre,
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White
             )

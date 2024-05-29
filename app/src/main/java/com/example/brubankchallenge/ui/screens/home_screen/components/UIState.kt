@@ -1,7 +1,6 @@
-package com.example.brubankchallenge.ui.screens.main_screen.components
+package com.example.brubankchallenge.ui.screens.home_screen.components
 
 import com.example.brubankchallenge.domain.model.Movie
-import com.example.brubankchallenge.domain.model.TopRatedMovies
 
 sealed class UIState {
     data object Loading : UIState()
