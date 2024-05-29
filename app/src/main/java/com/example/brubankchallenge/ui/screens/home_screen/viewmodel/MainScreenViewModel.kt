@@ -35,10 +35,11 @@ class MainScreenViewModel @Inject constructor(
         MoviesAndGenresState(movies = flowOf(moviesState), genres = genres)
     }
 
-    fun getGenresForMovie(movie: Movie): List<String> {
-        return _genres.value.filter { genre ->
-            movie.genreIds.contains(genre.id)
-        }.map { it.name }
+    fun getPrimaryGenreForMovie(movie: Movie): String? {
+        val genresMap = _genres.value.associateBy { it.id }
+        return movie.genreIds.firstOrNull()?.let { genreId ->
+            genresMap[genreId]?.name
+        }
     }
 }
 

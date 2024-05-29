@@ -54,7 +54,7 @@ fun HomeScreen(
                         MovieItem(
                             title = movie.title ?: "",
                             posterPath = movie.posterPath ?: "",
-                            genre = mainScreenViewModel.getGenresForMovie(movie).joinToString()
+                            genre = mainScreenViewModel.getPrimaryGenreForMovie(movie) ?: ""
                         )
                     }
             }
