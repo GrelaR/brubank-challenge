@@ -2,19 +2,23 @@ package com.example.brubankchallenge.data.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.example.brubankchallenge.data.api.GetMoviesService
 import com.example.brubankchallenge.data.datasource.GetMoviesDataSource
 import com.example.brubankchallenge.domain.model.Movie
 import retrofit2.HttpException
 import java.io.IOException
 
 class MoviePagingSource(
-    private val getMoviesDataSource: GetMoviesDataSource
+    private val getMoviesDataSource: GetMoviesDataSource,
+    private val searchMoviesDataSource: SearchMoviesDataSource,
+    private val query: String? = null
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val page = params.key ?: 1
         return try {
-            val response = getMoviesDataSource.getMovies(page)
+            val response = if (query == null) getMoviesDataSource.getMovies(page)
+            else searchMoviesDataSource.searchMovies(query, page)
             if (response.isSuccessful) {
                 val movies = response.body()?.results ?: emptyList()
                 LoadResult.Page(
