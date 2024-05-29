@@ -6,6 +6,8 @@ import com.example.brubankchallenge.data.datasource.GetGenresDataSourceImpl
 import com.example.brubankchallenge.data.datasource.GetMoviesDataSource
 import com.example.brubankchallenge.data.datasource.GetMoviesDataSourceImpl
 import com.example.brubankchallenge.data.datasource.MoviePagingSource
+import com.example.brubankchallenge.data.datasource.SearchMoviesDataSource
+import com.example.brubankchallenge.data.datasource.SearchMoviesDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +22,21 @@ object DataSourceModule {
     }
 
     @Provides
+    fun provideSearchMoviesDataSource(getMoviesService: GetMoviesService): SearchMoviesDataSource {
+        return SearchMoviesDataSourceImpl(getMoviesService)
+    }
+
+    @Provides
     fun provideGetGenresDataSource(getMoviesService: GetMoviesService): GetGenresDataSource {
         return GetGenresDataSourceImpl(getMoviesService)
     }
 
     @Provides
-    fun provideMoviesPagingSource(getMoviesDataSource: GetMoviesDataSource): MoviePagingSource {
-        return MoviePagingSource(getMoviesDataSource)
+    fun provideMoviesPagingSource(
+        getMoviesDataSource: GetMoviesDataSource,
+        searchMoviesDataSource: SearchMoviesDataSource
+    ): MoviePagingSource {
+        return MoviePagingSource(getMoviesDataSource, searchMoviesDataSource)
     }
 
 }
