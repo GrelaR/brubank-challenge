@@ -2,6 +2,7 @@ package com.example.brubankchallenge.ui.screens.home_screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.brubankchallenge.domain.model.Movie
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
@@ -51,7 +51,7 @@ class MainScreenViewModel @Inject constructor(
 
     fun getPrimaryGenreForMovie(movie: Movie): String? {
         val genresMap = _genres.value.associateBy { it.id }
-        return movie.genreIds.firstOrNull()?.let { genreId ->
+        return movie.genresIds.firstOrNull()?.let { genreId ->
             genresMap[genreId]?.name
         }
     }
@@ -59,10 +59,12 @@ class MainScreenViewModel @Inject constructor(
     fun onSearchQueryChanged(query: String) {
         _searchQuery.value = query
     }
+
+    fun navigateToDetailScreen(navController: NavController, movie: Movie) {
+        val title = movie.title
+        val posterPath = movie.posterPath.removePrefix("/")
+        val overview = movie.overview
+        val releaseDate = movie.releaseDate
+        navController.navigate("detail_screen/$title/$posterPath/$overview/$releaseDate")
+    }
 }
-
-
-
-
-
-

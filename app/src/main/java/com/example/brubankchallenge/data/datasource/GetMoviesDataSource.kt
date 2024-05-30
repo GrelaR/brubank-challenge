@@ -1,8 +1,8 @@
 package com.example.brubankchallenge.data.datasource
 
-import com.example.brubankchallenge.domain.model.MovieResponse
+import com.example.brubankchallenge.data.dto.MovieResponseDto
 import retrofit2.Response
 
 interface GetMoviesDataSource {
-    suspend fun getMovies(page: Int): Response<MovieResponse>
+    suspend fun getMovies(page: Int): Response<MovieResponseDto>
 }
