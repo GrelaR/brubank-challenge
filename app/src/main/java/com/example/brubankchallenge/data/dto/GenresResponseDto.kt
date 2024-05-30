@@ -1,10 +1,10 @@
-package com.example.brubankchallenge.domain.model
+package com.example.brubankchallenge.data.dto
 
 import com.google.errorprone.annotations.Keep
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class MovieGenresResponse(
+data class GenresResponseDto(
     @SerializedName("genres")
-    val genres: List<Genre>
+    val genres: List<GenresDto>
 )

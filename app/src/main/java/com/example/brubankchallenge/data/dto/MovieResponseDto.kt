@@ -1,14 +1,12 @@
-package com.example.brubankchallenge.domain.model
+package com.example.brubankchallenge.data.dto
 
-import com.google.errorprone.annotations.Keep
 import com.google.gson.annotations.SerializedName
 
-@Keep
-data class MovieResponse(
+data class MovieResponseDto(
     @SerializedName("page")
     val page: Int,
     @SerializedName("results")
-    val results: List<Movie>,
+    val results: List<MovieDto>,
     @SerializedName("total_pages")
     val totalPages: Int,
     @SerializedName("total_results")

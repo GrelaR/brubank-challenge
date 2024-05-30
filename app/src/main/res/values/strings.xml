@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Brubank Challenge</string>
+
+    <string name="suscripto">SUSCRIPTO</string>
+    <string name="overview">OVERVIEW</string>
+    <string name="back">Back</string>
+    <string name="recomendadas">Recomendadas</string>
 </resources>

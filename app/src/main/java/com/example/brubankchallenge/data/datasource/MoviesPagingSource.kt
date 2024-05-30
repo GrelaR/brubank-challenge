@@ -2,8 +2,7 @@ package com.example.brubankchallenge.data.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.brubankchallenge.data.api.GetMoviesService
-import com.example.brubankchallenge.data.datasource.GetMoviesDataSource
+import com.example.brubankchallenge.data.mapper.toMovieDomain
 import com.example.brubankchallenge.domain.model.Movie
 import retrofit2.HttpException
 import java.io.IOException
@@ -20,7 +19,8 @@ class MoviePagingSource(
             val response = if (query == null) getMoviesDataSource.getMovies(page)
             else searchMoviesDataSource.searchMovies(query, page)
             if (response.isSuccessful) {
-                val movies = response.body()?.results ?: emptyList()
+                val moviesDto = response.body()?.results ?: emptyList()
+                val movies = moviesDto.toMovieDomain()
                 LoadResult.Page(
                     data = movies,
                     prevKey = if (page == 1) null else page - 1,

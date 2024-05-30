@@ -1,5 +1,6 @@
 package com.example.brubankchallenge.ui.screens.home_screen.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,20 +18,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.brubankchallenge.BuildConfig
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieItem(title: String, posterPath: String, genre: String) {
+fun MovieItem(onClickAction: () -> Unit, title: String, posterPath: String, genre: String) {
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
             .padding(8.dp)
+            .clickable { onClickAction() }
     ) {
         GlideImage(
-            model = "https://image.tmdb.org/t/p/w500${posterPath}",
+            model = BuildConfig.BASE_IMAGE_URL + posterPath,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,4 +69,3 @@ fun MovieItem(title: String, posterPath: String, genre: String) {
     }
 
 }
-

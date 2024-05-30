@@ -30,6 +30,12 @@ android {
             "BASE_URL",
             "\"https://api.themoviedb.org/3/\""
         )
+
+        buildConfigField(
+            "String",
+            "BASE_IMAGE_URL",
+            "\"https://image.tmdb.org/t/p/w500/\""
+        )
     }
 
     buildTypes {
@@ -93,30 +99,26 @@ dependencies {
     implementation(libs.converter.gson)
     // Compose Navigation
     implementation(libs.androidx.navigation.compose.v240)
-
     // Compose livedata
     implementation(libs.androidx.runtime.livedata)
-
     // Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     // Glide
     implementation(libs.compose)
-
     // Palette
     implementation(libs.androidx.palette.ktx)
-
     // Pagination
     implementation(libs.androidx.paging.compose)
-
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-
+    //paging
     implementation(libs.androidx.paging.runtime)
-
+    //lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    //palette
+    implementation(libs.androidx.palette)
 
 }
 
