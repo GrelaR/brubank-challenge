@@ -1,10 +1,10 @@
 package com.example.brubankchallenge.domain.model
 
 data class Movie(
-    val id: Int,
-    val title: String,
-    val posterPath: String,
     val genresIds: List<Int>,
+    val id: Int,
     val overview: String,
-    val releaseDate: String
+    val posterPath: String,
+    val releaseDate: String,
+    val title: String
 )

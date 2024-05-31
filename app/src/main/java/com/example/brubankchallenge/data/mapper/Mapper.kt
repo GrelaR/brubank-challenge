@@ -6,22 +6,22 @@ import com.example.brubankchallenge.domain.model.Genre
 import com.example.brubankchallenge.domain.model.Movie
 
 
-fun MovieDto.toDomain(): Movie {
+fun MovieDto.toMovieDomain(): Movie {
     return Movie(
-        id = id,
-        title = title,
-        posterPath = posterPath,
-        genresIds = genresIds,
-        overview = overview,
-        releaseDate = releaseDate
+        id = this.id ?: 0,
+        title = this.title ?: "",
+        posterPath = posterPath ?: "",
+        genresIds = genresIds ?: emptyList(),
+        overview = overview ?: "",
+        releaseDate = releaseDate ?: "",
     )
 }
 
 fun List<MovieDto>.toMovieDomain(): List<Movie> {
-    return this.map { it.toDomain() }
+    return this.map { it.toMovieDomain() }
 }
 
-fun GenresDto.toDomain(): Genre {
+fun GenresDto.toGenresDomain(): Genre {
     return Genre(
         id = id,
         name = name
@@ -29,5 +29,5 @@ fun GenresDto.toDomain(): Genre {
 }
 
 fun List<GenresDto>.toGenresDomain(): List<Genre> {
-    return this.map { it.toDomain() }
+    return this.map { it.toGenresDomain() }
 }

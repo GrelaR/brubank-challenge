@@ -12,6 +12,7 @@ import com.example.brubankchallenge.domain.usecase.SearchMoviesUseCase
 import com.example.brubankchallenge.ui.screens.home_screen.model.MoviesAndGenresState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,10 +31,13 @@ class MainScreenViewModel @Inject constructor(
 ) : ViewModel() {
     private val _genres = getGenresUseCase()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-
+//    @OptIn(FlowPreview::class)
+//    val searchQuery: StateFlow<String> =
+//        _searchQuery.debounce(500L).stateIn(viewModelScope, SharingStarted.Lazily, "")
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val _moviesState: Flow<PagingData<Movie>> = searchQuery.flatMapLatest { query ->
         if (query.isEmpty()) {
             getMoviesUseCase().cachedIn(viewModelScope)
@@ -62,7 +66,7 @@ class MainScreenViewModel @Inject constructor(
 
     fun navigateToDetailScreen(navController: NavController, movie: Movie) {
         val title = movie.title
-        val posterPath = movie.posterPath.removePrefix("/")
+        val posterPath = movie.posterPath?.removePrefix("/")
         val overview = movie.overview
         val releaseDate = movie.releaseDate
         navController.navigate("detail_screen/$title/$posterPath/$overview/$releaseDate")

@@ -1,8 +1,10 @@
 package com.example.brubankchallenge.ui.screens.home_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -25,7 +27,16 @@ fun HomeScreen(
             .fillMaxSize()
             .background(Color(0xFF1B1B1B))
     ) {
-        SearchTopBar(mainScreenViewModel = mainScreenViewModel)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF151414))
+        ) {
+            SearchTopBar(
+                mainScreenViewModel = mainScreenViewModel
+            )
+        }
+
         if (searchState.value.isEmpty()) {
             TopRatedMoviesList(
                 navController = navController,

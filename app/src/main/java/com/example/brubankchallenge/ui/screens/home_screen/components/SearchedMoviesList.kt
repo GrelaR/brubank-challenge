@@ -1,6 +1,5 @@
 package com.example.brubankchallenge.ui.screens.home_screen.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,14 +29,14 @@ fun SearchedMoviesList(
     val movies = combinedData.movies.collectAsLazyPagingItems()
 
     LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        contentPadding = PaddingValues(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(movies.itemCount) { movieItem ->
             movies[movieItem]?.let { movie ->
                 SearchedMovieItem(
-                    title = movie.title ?: "",
-                    posterPath = movie.posterPath ?: "",
+                    title = movie.title,
+                    posterPath = movie.posterPath,
                     genre = mainScreenViewModel.getPrimaryGenreForMovie(movie) ?: ""
                 )
             }
@@ -45,7 +44,6 @@ fun SearchedMoviesList(
         movies.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
-                    // Show initial loading
                     item(key = 1) {
                         Box(
                             modifier = Modifier
@@ -59,10 +57,7 @@ fun SearchedMoviesList(
                 }
 
                 loadState.append is LoadState.Loading -> {
-                    Log.d("DEBUG", "Loading")
-                    // Show pagination loading
                     item(key = 2) {
-                        Log.d("DEBUG", "Inside item")
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -75,7 +70,6 @@ fun SearchedMoviesList(
                 }
 
                 loadState.append is LoadState.Error -> {
-                    // Show pagination error
                     val e = movies.loadState.append as LoadState.Error
                     item {
                         Box(
