@@ -6,8 +6,11 @@ import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.brubankchallenge.domain.model.Movie
+import com.example.brubankchallenge.domain.usecase.AddMovieUseCase
 import com.example.brubankchallenge.domain.usecase.GetGenresUseCase
 import com.example.brubankchallenge.domain.usecase.GetMoviesUseCase
+import com.example.brubankchallenge.domain.usecase.GetSubscribedMoviesUseCase
+import com.example.brubankchallenge.domain.usecase.RemoveMovieUseCase
 import com.example.brubankchallenge.domain.usecase.SearchMoviesUseCase
 import com.example.brubankchallenge.ui.screens.home_screen.model.MoviesAndGenresState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,21 +22,25 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val getMoviesUseCase: GetMoviesUseCase,
-    private val getGenresUseCase: GetGenresUseCase,
-    private val searchMoviesUseCase: SearchMoviesUseCase
+    getGenresUseCase: GetGenresUseCase,
+    private val searchMoviesUseCase: SearchMoviesUseCase,
+    private val addMovieUseCase: AddMovieUseCase,
+    getSubscriptionMoviesUseCase: GetSubscribedMoviesUseCase,
+    private val removeMovieUseCase: RemoveMovieUseCase
 ) : ViewModel() {
     private val _genres = getGenresUseCase()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-//    @OptIn(FlowPreview::class)
-//    val searchQuery: StateFlow<String> =
-//        _searchQuery.debounce(500L).stateIn(viewModelScope, SharingStarted.Lazily, "")
+
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
@@ -64,11 +71,38 @@ class MainScreenViewModel @Inject constructor(
         _searchQuery.value = query
     }
 
-    fun navigateToDetailScreen(navController: NavController, movie: Movie) {
-        val title = movie.title
-        val posterPath = movie.posterPath?.removePrefix("/")
-        val overview = movie.overview
-        val releaseDate = movie.releaseDate
-        navController.navigate("detail_screen/$title/$posterPath/$overview/$releaseDate")
+    val subscriptionMovies = getSubscriptionMoviesUseCase().stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        emptyList()
+    )
+
+    fun toggleMovieSubscription(movie: Movie) {
+        viewModelScope.launch {
+            val isSubscribed = isMovieSubscribed(movie).first()
+            if (isSubscribed) {
+                removeMovie(movie)
+            } else {
+                addMovie(movie)
+            }
+        }
+    }
+
+    private fun addMovie(movie: Movie) {
+        viewModelScope.launch {
+            addMovieUseCase(movie)
+        }
+    }
+
+    internal fun isMovieSubscribed(movie: Movie): Flow<Boolean> {
+        return subscriptionMovies.map { movies ->
+            movies.any { it.id == movie.id }
+        }
+    }
+
+    private fun removeMovie(movie: Movie) {
+        viewModelScope.launch {
+            removeMovieUseCase.invoke(movie)
+        }
     }
 }

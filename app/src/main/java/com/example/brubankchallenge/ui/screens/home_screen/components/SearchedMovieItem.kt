@@ -3,12 +3,10 @@ package com.example.brubankchallenge.ui.screens.home_screen.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.width
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +18,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,11 +32,18 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.brubankchallenge.BuildConfig
 import com.example.brubankchallenge.R
+import com.example.brubankchallenge.domain.model.Movie
+import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun SearchedMovieItem(title: String, posterPath: String, genre: String) {
+fun SearchedMovieItem(
+    movie: Movie,
+    mainScreenViewModel: MainScreenViewModel
+) {
+    val isSubscribed by mainScreenViewModel.isMovieSubscribed(movie).collectAsState(initial = false)
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -56,7 +63,7 @@ fun SearchedMovieItem(title: String, posterPath: String, genre: String) {
 
             ) {
                 GlideImage(
-                    model = BuildConfig.BASE_IMAGE_URL + posterPath,
+                    model = BuildConfig.BASE_IMAGE_URL + movie.posterPath,
                     contentDescription = null,
                     modifier = Modifier
                         .width(60.dp)
@@ -78,28 +85,33 @@ fun SearchedMovieItem(title: String, posterPath: String, genre: String) {
                             .fillMaxWidth(0.5f)
                     ) {
                         Text(
-                            text = title,
+                            text = movie.title,
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color.White,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                        Text(
-                            text = genre.uppercase(),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF606060)
-                        )
+                        mainScreenViewModel.getPrimaryGenreForMovie(movie)?.uppercase()?.let {
+                            Text(
+                                text = it,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = Color(0xFF606060)
+                            )
+                        }
                     }
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
                     ) {
                         OutlinedButton(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                mainScreenViewModel.toggleMovieSubscription(movie)
+                            },
                             colors = ButtonDefaults.outlinedButtonColors(
-                                disabledContainerColor = Color.Transparent,
                                 contentColor = Color(0xFF606060),
-                                containerColor = Color.Transparent
+                                containerColor = if (isSubscribed) Color(
+                                    0xFF757676
+                                ) else Color.Transparent,
                             ),
                             border = BorderStroke(1.dp, Color(0xFF606060)),
                             shape = RoundedCornerShape(4.dp),
@@ -109,9 +121,12 @@ fun SearchedMovieItem(title: String, posterPath: String, genre: String) {
                             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
                         ) {
                             Text(
-                                text = stringResource(R.string.agregar),
+                                text = if (isSubscribed) stringResource(id = R.string.agregado)
+                                else stringResource(
+                                    id = R.string.agregar
+                                ),
                                 style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFF606060)
+                                color = if (isSubscribed) Color.Black else Color(0xFF606060)
                             )
                         }
                     }
@@ -126,16 +141,6 @@ fun SearchedMovieItem(title: String, posterPath: String, genre: String) {
             )
         }
     }
-}
-
-@Composable
-@Preview
-fun SearchedMovieItemPreview() {
-    SearchedMovieItem(
-        title = "El padrino",
-        posterPath = "/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg",
-        genre = "Animada"
-    )
 }
 
 
