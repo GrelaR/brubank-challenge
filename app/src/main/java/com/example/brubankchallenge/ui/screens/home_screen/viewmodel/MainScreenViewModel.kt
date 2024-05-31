@@ -2,7 +2,6 @@ package com.example.brubankchallenge.ui.screens.home_screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.brubankchallenge.domain.model.Movie
@@ -45,9 +44,6 @@ class MainScreenViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
-    private val _loading = MutableStateFlow(true)
-    val loading: StateFlow<Boolean> = _loading.asStateFlow()
-
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _moviesState: Flow<PagingData<Movie>> = searchQuery.flatMapLatest { query ->
         if (query.isEmpty()) {
@@ -63,7 +59,6 @@ class MainScreenViewModel @Inject constructor(
     ) { moviesState, genres ->
         MoviesAndGenresState(movies = flowOf(moviesState), genres = genres)
     }
-        .onStart { _loading.value = true }
         .stateIn(viewModelScope, SharingStarted.Lazily, MoviesAndGenresState())
 
     fun getPrimaryGenreForMovie(movie: Movie): String? {

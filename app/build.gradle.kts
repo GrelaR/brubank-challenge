@@ -25,7 +25,7 @@ android {
         buildConfigField(
             "String",
             "API_ACCESS_TOKEN",
-            "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTdhMGYyZDEwY2M3NDAwZThmMTA5NzZkZmE1N2NjNCIsInN1YiI6IjY2NTBkNGE4ZDBmNmFiNWNjMzU4NzljYyIsInNjb3BlcyI6WyJhcGlfcmVhZC\""
+            "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTdhMGYyZDEwY2M3NDAwZThmMTA5NzZkZmE1N2NjNCIsInN1YiI6IjY2NTBkNGE4ZDBmNmFiNWNjMzU4NzljYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GYQ0t7PTssIOl7-o5mfuPuGwQ4EWmhP6QPipawC4u7g\""
         )
         buildConfigField(
             "String",

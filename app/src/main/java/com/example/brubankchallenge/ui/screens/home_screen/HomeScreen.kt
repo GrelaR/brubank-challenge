@@ -7,14 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.example.brubankchallenge.ui.screens.home_screen.components.LoadingAnimation
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchTopBar
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchedMoviesList
-import com.example.brubankchallenge.ui.screens.home_screen.components.SubscribedMoviesSection
 import com.example.brubankchallenge.ui.screens.home_screen.components.TopRatedMoviesList
 import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 
@@ -24,16 +21,12 @@ fun HomeScreen(
     mainScreenViewModel: MainScreenViewModel
 ) {
     val searchState = mainScreenViewModel.searchQuery.collectAsState()
-    val loading = mainScreenViewModel.loading.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF1B1B1B))
     ) {
-        if (loading.value) {
-            LoadingAnimation()
-        } else {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,5 +45,4 @@ fun HomeScreen(
                 SearchedMoviesList(mainScreenViewModel = mainScreenViewModel)
             }
         }
-    }
 }
