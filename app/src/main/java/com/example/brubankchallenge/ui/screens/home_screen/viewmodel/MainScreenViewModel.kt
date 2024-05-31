@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -44,6 +45,9 @@ class MainScreenViewModel @Inject constructor(
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
 
+    private val _loading = MutableStateFlow(true)
+    val loading: StateFlow<Boolean> = _loading.asStateFlow()
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _moviesState: Flow<PagingData<Movie>> = searchQuery.flatMapLatest { query ->
         if (query.isEmpty()) {
@@ -59,6 +63,8 @@ class MainScreenViewModel @Inject constructor(
     ) { moviesState, genres ->
         MoviesAndGenresState(movies = flowOf(moviesState), genres = genres)
     }
+        .onStart { _loading.value = true }
+        .stateIn(viewModelScope, SharingStarted.Lazily, MoviesAndGenresState())
 
     fun getPrimaryGenreForMovie(movie: Movie): String? {
         val genresMap = _genres.value.associateBy { it.id }

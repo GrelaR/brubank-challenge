@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import com.example.brubankchallenge.ui.screens.home_screen.components.LoadingAnimation
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchTopBar
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchedMoviesList
 import com.example.brubankchallenge.ui.screens.home_screen.components.SubscribedMoviesSection
@@ -23,29 +24,33 @@ fun HomeScreen(
     mainScreenViewModel: MainScreenViewModel
 ) {
     val searchState = mainScreenViewModel.searchQuery.collectAsState()
+    val loading = mainScreenViewModel.loading.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF1B1B1B))
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF151414))
-        ) {
-            SearchTopBar(
-                mainScreenViewModel = mainScreenViewModel
-            )
-        }
-        if (searchState.value.isEmpty()) {
-            TopRatedMoviesList(
-                navController = navController,
-                mainScreenViewModel = mainScreenViewModel
-            )
+        if (loading.value) {
+            LoadingAnimation()
         } else {
-            SearchedMoviesList(mainScreenViewModel = mainScreenViewModel)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFF151414))
+            ) {
+                SearchTopBar(
+                    mainScreenViewModel = mainScreenViewModel
+                )
+            }
+            if (searchState.value.isEmpty()) {
+                TopRatedMoviesList(
+                    navController = navController,
+                    mainScreenViewModel = mainScreenViewModel
+                )
+            } else {
+                SearchedMoviesList(mainScreenViewModel = mainScreenViewModel)
+            }
         }
     }
-
 }
