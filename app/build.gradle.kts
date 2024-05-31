@@ -25,7 +25,7 @@ android {
         buildConfigField(
             "String",
             "API_ACCESS_TOKEN",
-            "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTdhMGYyZDEwY2M3NDAwZThmMTA5NzZkZmE1N2NjNCIsInN1YiI6IjY2NTBkNGE4ZDBmNmFiNWNjMzU4NzljYyIsInNjb3BlcyI6WyJhcGlfcmVhZC\""
+            "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTdhMGYyZDEwY2M3NDAwZThmMTA5NzZkZmE1N2NjNCIsInN1YiI6IjY2NTBkNGE4ZDBmNmFiNWNjMzU4NzljYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.GYQ0t7PTssIOl7-o5mfuPuGwQ4EWmhP6QPipawC4u7g\""
         )
         buildConfigField(
             "String",
@@ -94,43 +94,71 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
     // Retrofit
     implementation(libs.retrofit)
+
     // Retrofit with Scalar Converter
     implementation(libs.gson)
-    //gson converter
+
+    // gson converter
     implementation(libs.converter.gson)
+
     // Compose Navigation
     implementation(libs.androidx.navigation.compose.v240)
+
     // Compose livedata
     implementation(libs.androidx.runtime.livedata)
+
     // Integration with ViewModels
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
     // Glide
     implementation(libs.compose)
+
     // Palette
     implementation(libs.androidx.palette.ktx)
+
     // Pagination
     implementation(libs.androidx.paging.compose)
+
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
-    //paging
+
+    // paging
     implementation(libs.androidx.paging.runtime)
-    //lifecycle
+
+    // lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    //palette
+
+    // palette
     implementation(libs.androidx.palette)
 
-    //Room
+    // Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
     // Coroutine support for Room
     implementation(libs.androidx.room.ktx)
-
     implementation(libs.kotlinx.serialization.json)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.junit)
+
+    // Robolectric
+    testImplementation(libs.robolectric)
+
+    // Coroutines tests
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    // Lottie
+    implementation(libs.lottie.compose)
 
 }
 

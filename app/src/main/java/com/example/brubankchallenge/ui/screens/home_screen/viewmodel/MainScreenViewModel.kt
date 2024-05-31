@@ -2,7 +2,6 @@ package com.example.brubankchallenge.ui.screens.home_screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.brubankchallenge.domain.model.Movie
@@ -26,6 +25,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -59,6 +59,7 @@ class MainScreenViewModel @Inject constructor(
     ) { moviesState, genres ->
         MoviesAndGenresState(movies = flowOf(moviesState), genres = genres)
     }
+        .stateIn(viewModelScope, SharingStarted.Lazily, MoviesAndGenresState())
 
     fun getPrimaryGenreForMovie(movie: Movie): String? {
         val genresMap = _genres.value.associateBy { it.id }

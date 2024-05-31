@@ -19,7 +19,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
 
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -59,9 +58,12 @@ val MovieNavType = object : NavType<Movie> (isNullableAllowed = true) {
         bundle.putParcelable(key, value)
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun get(bundle: Bundle, key: String): Movie? {
-        return bundle.getParcelable(key, Movie::class.java)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            bundle.getParcelable(key, Movie::class.java)
+        } else {
+            TODO("VERSION.SDK_INT < TIRAMISU")
+        }
     }
 
     override fun parseValue(value: String): Movie {
