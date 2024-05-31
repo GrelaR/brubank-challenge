@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchTopBar
 import com.example.brubankchallenge.ui.screens.home_screen.components.SearchedMoviesList
+import com.example.brubankchallenge.ui.screens.home_screen.components.SubscribedMoviesSection
 import com.example.brubankchallenge.ui.screens.home_screen.components.TopRatedMoviesList
 import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 
@@ -36,7 +38,6 @@ fun HomeScreen(
                 mainScreenViewModel = mainScreenViewModel
             )
         }
-
         if (searchState.value.isEmpty()) {
             TopRatedMoviesList(
                 navController = navController,

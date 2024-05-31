@@ -35,9 +35,8 @@ fun SearchedMoviesList(
         items(movies.itemCount) { movieItem ->
             movies[movieItem]?.let { movie ->
                 SearchedMovieItem(
-                    title = movie.title,
-                    posterPath = movie.posterPath,
-                    genre = mainScreenViewModel.getPrimaryGenreForMovie(movie) ?: ""
+                    movie = movie,
+                    mainScreenViewModel = mainScreenViewModel
                 )
             }
         }

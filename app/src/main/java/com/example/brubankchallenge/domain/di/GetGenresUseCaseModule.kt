@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object GetGenresUseCaseRepositoryModule {
+object GetGenresRepositoryModule {
     @Provides
     fun provideGetGenresRepositoryImpl(getGenresRepositoryImpl: GetGenresRepositoryImpl): GetGenresRepository {
         return getGenresRepositoryImpl

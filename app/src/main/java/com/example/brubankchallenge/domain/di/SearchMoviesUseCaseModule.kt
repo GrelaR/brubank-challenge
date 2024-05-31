@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SearchMoviesUseCaseRepositoryModule {
+object SearchMoviesRepositoryModule {
     @Provides
     fun provideSearchMoviesRepositoryImpl(searchMoviesRepositoryImpl: SearchMoviesRepositoryImpl): SearchMoviesRepository {
         return searchMoviesRepositoryImpl

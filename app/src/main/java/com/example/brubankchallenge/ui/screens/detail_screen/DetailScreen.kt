@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +30,8 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.brubankchallenge.BuildConfig
 import com.example.brubankchallenge.R
+import com.example.brubankchallenge.domain.model.Movie
+import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 import com.example.brubankchallenge.utils.getContrastingTextColor
 import com.example.brubankchallenge.utils.getDominantColor
 import kotlinx.coroutines.Dispatchers
@@ -38,23 +41,22 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun DetailScreen(
-    title: String,
-    posterPath: String,
-    overview: String,
-    releaseDate: String,
-    navController: NavHostController
+    movie: Movie,
+    navController: NavHostController,
+    mainScreenViewModel: MainScreenViewModel
 ) {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     var dominantColor by remember { mutableStateOf(Color.Black) }
     val scope = rememberCoroutineScope()
+    val isSubscribed by mainScreenViewModel.isMovieSubscribed(movie).collectAsState(initial = false)
 
-    LaunchedEffect(posterPath) {
+    LaunchedEffect(movie.posterPath) {
         scope.launch {
             val glideBitmap = withContext(Dispatchers.IO) {
                 Glide.with(context)
                     .asBitmap()
-                    .load(BuildConfig.BASE_IMAGE_URL + posterPath)
+                    .load(BuildConfig.BASE_IMAGE_URL + movie.posterPath)
                     .submit()
                     .get()
             }
@@ -81,7 +83,7 @@ fun DetailScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
         GlideImage(
-            model = BuildConfig.BASE_IMAGE_URL + posterPath,
+            model = BuildConfig.BASE_IMAGE_URL + movie.posterPath,
             contentDescription = null,
             modifier = Modifier
                 .height(400.dp)
@@ -91,19 +93,19 @@ fun DetailScreen(
         )
 
         Text(
-            text = title,
+            text = movie.title,
             color = getContrastingTextColor(dominantColor),
             modifier = Modifier.padding(top = 16.dp)
         )
 
         Text(
-            text = releaseDate,
+            text = movie.releaseDate,
             color = getContrastingTextColor(dominantColor),
             modifier = Modifier.padding(top = 8.dp)
         )
 
         OutlinedButton(
-            onClick = { TODO("Handlear subscription logic with room") },
+            onClick = { mainScreenViewModel.toggleMovieSubscription(movie) },
             shape = RoundedCornerShape(50),
             border = BorderStroke(2.dp, getContrastingTextColor(dominantColor)),
             modifier = Modifier
@@ -112,7 +114,7 @@ fun DetailScreen(
                 .height(50.dp)
         ) {
             Text(
-                text = stringResource(R.string.suscripto),
+                text = if (isSubscribed) stringResource(R.string.suscripto) else stringResource(R.string.suscribirme),
                 color = getContrastingTextColor(dominantColor)
             )
         }
@@ -126,13 +128,12 @@ fun DetailScreen(
             )
 
             Text(
-                text = overview,
+                text = movie.overview,
                 color = getContrastingTextColor(dominantColor),
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
     }
 }
-
 
 

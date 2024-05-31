@@ -2,8 +2,10 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlinKsp)
+    alias(libs.plugins.kotlin.serialization)
     id("com.google.dagger.hilt.android")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -23,7 +25,7 @@ android {
         buildConfigField(
             "String",
             "API_ACCESS_TOKEN",
-            "\"${project.findProperty("API_ACCESS_TOKEN")}\""
+            "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMTdhMGYyZDEwY2M3NDAwZThmMTA5NzZkZmE1N2NjNCIsInN1YiI6IjY2NTBkNGE4ZDBmNmFiNWNjMzU4NzljYyIsInNjb3BlcyI6WyJhcGlfcmVhZC\""
         )
         buildConfigField(
             "String",
@@ -36,6 +38,7 @@ android {
             "BASE_IMAGE_URL",
             "\"https://image.tmdb.org/t/p/w500/\""
         )
+
     }
 
     buildTypes {
@@ -119,6 +122,15 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     //palette
     implementation(libs.androidx.palette)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+
+    // Coroutine support for Room
+    implementation(libs.androidx.room.ktx)
+
+    implementation(libs.kotlinx.serialization.json)
 
 }
 
