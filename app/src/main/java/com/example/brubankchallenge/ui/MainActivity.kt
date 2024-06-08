@@ -1,4 +1,4 @@
-package com.example.brubankchallenge.ui.activities
+package com.example.brubankchallenge.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

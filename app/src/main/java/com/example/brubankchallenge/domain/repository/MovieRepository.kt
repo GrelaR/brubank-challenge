@@ -6,7 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     suspend fun addMovie(movie: Movie)
     fun getSubscriptionMovies(): Flow<List<Movie>>
-
     suspend fun removeMovie(movie: Movie)
 }
-
