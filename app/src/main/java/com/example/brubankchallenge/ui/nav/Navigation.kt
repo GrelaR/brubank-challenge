@@ -16,18 +16,18 @@ import com.example.brubankchallenge.domain.model.Movie
 import com.example.brubankchallenge.ui.screens.detail_screen.DetailScreen
 import com.example.brubankchallenge.ui.screens.home_screen.HomeScreen
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
 
-
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
-        composable(Screen.MainScreen.route) {
+    NavHost(navController = navController, startDestination = Routes.MainScreen.route) {
+        composable(Routes.MainScreen.route) {
             val mainScreenViewModel = hiltViewModel<MainScreenViewModel>()
             HomeScreen(navController, mainScreenViewModel)
         }
-        composable( route = Screen.DetailScreen.route,
+        composable(
+            route = Routes.DetailScreen.route,
             arguments = listOf(navArgument("movie") {
                 type = MovieNavType
             })
@@ -46,14 +46,8 @@ fun Navigation() {
     }
 }
 
-sealed class Screen(val route: String) {
-    data object MainScreen : Screen("main_screen")
-    data object DetailScreen : Screen("detail_screen/{movie}") {
-        fun withArgs(movie: Movie) = "detail_screen/${Uri.encode(Json.encodeToJsonElement(movie).toString())}"
-    }
-}
 
-val MovieNavType = object : NavType<Movie> (isNullableAllowed = true) {
+val MovieNavType = object : NavType<Movie>(isNullableAllowed = true) {
     override fun put(bundle: Bundle, key: String, value: Movie) {
         bundle.putParcelable(key, value)
     }
@@ -69,6 +63,5 @@ val MovieNavType = object : NavType<Movie> (isNullableAllowed = true) {
     override fun parseValue(value: String): Movie {
         return Json.decodeFromString(Uri.decode(value))
     }
-
 
 }

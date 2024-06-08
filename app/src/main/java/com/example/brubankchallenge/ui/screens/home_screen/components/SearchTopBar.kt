@@ -84,7 +84,7 @@ fun SearchTopBar(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Search,
-                            contentDescription = "Search",
+                            contentDescription = stringResource(R.string.search),
                             tint = Color(0xFF818181),
                             modifier = Modifier.padding(
                                 start = 2.dp,
@@ -118,7 +118,7 @@ fun SearchTopBar(
 
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Clear",
+                            contentDescription = stringResource(R.string.clear),
                             tint = Color.White,
                             modifier = Modifier
                                 .padding(end = 8.dp)
@@ -161,7 +161,7 @@ fun SearchTopBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search",
+                        contentDescription = stringResource(R.string.search),
                         tint = Color.White,
                         modifier = Modifier
                             .padding(start = 16.dp, end = 8.dp)

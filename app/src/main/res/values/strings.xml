@@ -11,4 +11,6 @@
     <string name="cancel">Cancel</string>
     <string name="agregar">AGREGAR</string>
     <string name="agregado">AGREGADO</string>
+    <string name="search">Search</string>
+    <string name="clear">Clear</string>
 </resources>

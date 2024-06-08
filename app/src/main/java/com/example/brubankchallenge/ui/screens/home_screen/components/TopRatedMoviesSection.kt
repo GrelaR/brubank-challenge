@@ -1,6 +1,5 @@
 package com.example.brubankchallenge.ui.screens.home_screen.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,32 +21,19 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.brubankchallenge.R
-import com.example.brubankchallenge.ui.nav.Screen
+import com.example.brubankchallenge.ui.nav.Routes
 import com.example.brubankchallenge.ui.screens.home_screen.model.MoviesAndGenresState
 import com.example.brubankchallenge.ui.screens.home_screen.viewmodel.MainScreenViewModel
 
-
 @Composable
-fun TopRatedMoviesList(
+fun TopRatedMoviesSection(
     navController: NavController,
     mainScreenViewModel: MainScreenViewModel
 ) {
     val combinedData by mainScreenViewModel.combinedData.collectAsState(initial = MoviesAndGenresState())
     val movies = combinedData.movies.collectAsLazyPagingItems()
-    val subscriptionMovies by mainScreenViewModel.subscriptionMovies.collectAsState(initial = emptyList())
 
-    if (subscriptionMovies.isNotEmpty()) {
-        Column(
-            modifier = Modifier
-                .background(Color(0xFF1B1B1B))
-        ) {
-            SubscribedMoviesSection(
-                navController = navController,
-                mainScreenViewModel = mainScreenViewModel
-            )
-        }
-    }
-    Column (
+    Column(
         modifier = Modifier.padding(24.dp)
     ) {
         Text(
@@ -63,7 +49,7 @@ fun TopRatedMoviesList(
                 movies[movieItem]?.let { movie ->
                     MovieItem(
                         onClickAction = {
-                            navController.navigate(Screen.DetailScreen.withArgs(movie))
+                            navController.navigate(Routes.DetailScreen.withArgs(movie))
                         },
                         title = movie.title,
                         posterPath = movie.posterPath,
