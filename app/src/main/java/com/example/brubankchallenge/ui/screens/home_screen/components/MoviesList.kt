@@ -14,15 +14,13 @@ fun MoviesList(
 ) {
     val subscriptionMovies by mainScreenViewModel.subscriptionMovies.collectAsState(initial = emptyList())
 
-    if (subscriptionMovies.isNotEmpty()) {
+    if (subscriptionMovies.isNotEmpty())
         SubscribedMoviesSection(
             navController = navController,
             mainScreenViewModel = mainScreenViewModel
         )
-    } else {
-        TopRatedMoviesSection(
-            navController = navController,
-            mainScreenViewModel = mainScreenViewModel
-        )
-    }
+    TopRatedMoviesSection(
+        navController = navController,
+        mainScreenViewModel = mainScreenViewModel
+    )
 }
