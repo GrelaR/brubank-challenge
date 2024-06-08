@@ -2,7 +2,6 @@ package com.example.brubankchallenge.ui.screens.home_screen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,33 +40,26 @@ fun MovieItem(onClickAction: () -> Unit, title: String, posterPath: String, genr
                 .fillMaxWidth()
                 .height(200.dp),
             contentScale = ContentScale.Crop,
-            colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+            colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0.1f) })
         )
 
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.White,
 
-        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .align(Alignment.TopEnd)
+        )
+
+        Text(
+            text = genre,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color.White,
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(16.dp)
-        ) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White
-            )
-        }
-        Column(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp)
-        ) {
-            Text(
-                text = genre,
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White
-            )
-        }
-
+                .padding(8.dp)
+        )
     }
-
 }

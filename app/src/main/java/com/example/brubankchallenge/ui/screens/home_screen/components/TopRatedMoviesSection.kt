@@ -33,7 +33,6 @@ fun TopRatedMoviesSection(
     val combinedData by mainScreenViewModel.combinedData.collectAsState(initial = MoviesAndGenresState())
     val movies = combinedData.movies.collectAsLazyPagingItems()
 
-
     Column(
         modifier = Modifier.padding(24.dp)
     ) {
